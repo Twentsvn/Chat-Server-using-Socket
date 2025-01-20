@@ -1,2 +1,17 @@
-# Chat-Server-using-Socket
-Implementation of Chat Server 
+# CS425: Computer Networks
+
+
+## Syallabus
+
+
+## Teaching Assistants
+
+
+## Schedule
+
+
+
+## Grading
+
+
+
