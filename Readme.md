@@ -95,10 +95,10 @@ CS425: Computer Networks - Assignment 1
         |       +----------------------------+
         |                  |
         v                  v
-+-----------------+    +--------------------------+
-| Authentication  |    | Add Client to Connected  |
-| Successful      |    | Clients Map (clients)    |
-+-----------------+    +--------------------------+
+    +-----------------+    +--------------------------+
+    | Authentication  |    | Add Client to Connected  |
+    | Successful      |    | Clients Map (clients)    |
+    +-----------------+    +--------------------------+
                               |
                               v
                   +----------------------------+
@@ -112,16 +112,17 @@ CS425: Computer Networks - Assignment 1
                   | (Loop in handleClient())   |
                   +----------------------------+
                               |
-  +-------------------------------------------------------------+
-  |   Message Handling Based on Command                         |
-  +-------------------------------------------------------------+
-  | 1. `/broadcast <message>` -> broadcastMessage()             |
-  | 2. `/msg <user> <message>` -> privateMessage()              |
-  | 3. `/group_msg <group> <message>` -> groupMessage()         |
-  | 4. `/create_group <group>` -> createGroup()                 |
-  | 5. `/join_group <group>` -> joinGroup()                     |
-  | 6. `/leave_group <group>` -> leaveGroup()                   |
-  +-------------------------------------------------------------+
+                              v
+    +-------------------------------------------------------------+
+    |   Message Handling Based on Command                         |
+    +-------------------------------------------------------------+
+    | 1. `/broadcast <message>` -> broadcastMessage()             |
+    | 2. `/msg <user> <message>` -> privateMessage()              |
+    | 3. `/group_msg <group> <message>` -> groupMessage()         |
+    | 4. `/create_group <group>` -> createGroup()                 |
+    | 5. `/join_group <group>` -> joinGroup()                     |
+    | 6. `/leave_group <group>` -> leaveGroup()                   |
+    +-------------------------------------------------------------+
                               |
                               v
                   +----------------------------+
