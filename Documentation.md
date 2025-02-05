@@ -96,16 +96,16 @@
         |       +----------------------------+
         |                  |
         v                  v
-+-----------------+    +--------------------------+
-| Authentication  |    | Add Client to Connected  |
-| Successful      |    | Clients Map (clients)    |
-+-----------------+    +--------------------------+
+    +-----------------+    +--------------------------+
+    | Authentication  |    | Add Client to Connected  |
+    | Successful      |    | Clients Map (clients)    |
+    +-----------------+    +--------------------------+
                               |
                               v
-                   +----------------------------+
-                   | Send "Welcome" Message to  |
-                   | Client & Notify Others     |
-                   +----------------------------+
+                  +----------------------------+
+                  | Send "Welcome" Message to  |
+                  | Client & Notify Others     |
+                  +----------------------------+
                               |
                               v
                   +----------------------------+
@@ -114,16 +114,16 @@
                   +----------------------------+
                               |
                               v
-  +-------------------------------------------------------------+
-  | Message Handling Based on Command                           |
-  +-------------------------------------------------------------+
-  | 1. `/broadcast <message>` -> broadcastMessage()             |
-  | 2. `/msg <user> <message>` -> privateMessage()              |
-  | 3. `/group_msg <group> <message>` -> groupMessage()         |
-  | 4. `/create_group <group>` -> createGroup()                 |
-  | 5. `/join_group <group>` -> joinGroup()                     |
-  | 6. `/leave_group <group>` -> leaveGroup()                   |
-  +-------------------------------------------------------------+
+    +-------------------------------------------------------------+
+    |   Message Handling Based on Command                         |
+    +-------------------------------------------------------------+
+    | 1. `/broadcast <message>` -> broadcastMessage()             |
+    | 2. `/msg <user> <message>` -> privateMessage()              |
+    | 3. `/group_msg <group> <message>` -> groupMessage()         |
+    | 4. `/create_group <group>` -> createGroup()                 |
+    | 5. `/join_group <group>` -> joinGroup()                     |
+    | 6. `/leave_group <group>` -> leaveGroup()                   |
+    +-------------------------------------------------------------+
                               |
                               v
                   +----------------------------+
@@ -142,7 +142,7 @@
                   | Server Continues Running   |
                   | Accepts More Clients       |
                   +----------------------------+
-                  
+
 
 
 ## Testing
