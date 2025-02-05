@@ -28,8 +28,51 @@
 
 ## Design Decisions
 > ### Connection Management
-- I used multithreaded approach for my chat server as it is memory efficient as threads share same memory space while for every process, needs separate memory allocation. Moreover, threading enables us to process network requests without waiting for other tasks to complete.
+- We used multithreaded approach for my chat server as it is memory efficient as threads share same memory space while for every process, needs separate memory allocation. Moreover, threading enables us to process network requests without waiting for other tasks to complete.
     Threading also provides scalability to the code.
+
+> ### Synchronization
+Since the server is multithreaded, multiple clients interact concurrently, modifying shared resources. 
+To prevent race conditions and data corruption, the following resources require synchronization:
+
+Resource                | Data Structure                                                   | Need
+----------------------- | ---------------------------------------------------------------- | -----------------------------------------
+Connected Clients List  | std::unordered_map<int, std::string> clients;                    | Clients dynamically connect/disconnect.
+User Authentication     | std::unordered_map<std::string, std::string> users;              | Read by multiple threads during authentication.
+Group Memberships       | std::unordered_map<std::string, std::unordered_set<int>> groups; | Clients join, leave, and send messages.
+
+> ## Mechanisms Used
+
+Mechanism                  | Where It Is Used?        | Purpose
+-------------------------- | ----------------------- | ----------------------------
+std::mutex clients_mutex;  | Protects clients map    | Ensures safe addition/removal of clients.
+std::mutex groups_mutex;   | Protects groups map     | Ensures safe group creation, joining, and messaging.
+std::lock_guard<std::mutex>| Used in modifying maps  | Provides automatic locking and unlocking of shared resources.
+
+> ##  Justification for Synchronization in Each Resource
+
+ Connected Clients (`clients` map)
+  - Clients dynamically connect, disconnect, and send messages, modifying the clients map.
+  - Without synchronization: Two clients modifying clients at the same time could lead to inconsistent data.
+  - Implementation:
+    std::lock_guard<std::mutex> lock(clients_mutex);
+    clients[client_socket] = username; // Safely add client
+
+ Group Membership (`groups` map)
+  - Clients create, join, leave, and send messages in groups, modifying groups.
+  - Without synchronization: Two clients modifying a group simultaneously could cause data corruption or loss.
+  - Implementation:
+    std::lock_guard<std::mutex> lock(groups_mutex);
+    groups[group_name].insert(client_socket); // Safely modify group
+
+If mutexes were not used, the following problems could occur:
+
+Issue                 | Cause                                             | Example Scenario
+--------------------- | ----------------------------------------------- | -----------------------------------
+Race Conditions      | Multiple threads modify the same resource.       | Two clients joining a group simultaneously could cause one to be ignored.
+Data Corruption      | Partial updates due to unsynchronized access.    | A client’s username could be partially written if another thread modifies clients.
+Unexpected Crashes   | Iterating over a structure while another modifies it. | Broadcasting a message while a client disconnects could cause an invalid memory access.
+
 
 > ### Data Structures
 - Describe the key data structures used (maps, sets, etc.)
