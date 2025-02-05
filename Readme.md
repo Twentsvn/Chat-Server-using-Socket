@@ -209,10 +209,13 @@ Client Disconnects Unexpectedly  | Server should disconnect the client          
 
 
 ## Challenges Faced
-1. Challenge 1
-   - Description
-   - How it was resolved
-2. [Add more challenges]
+1. How does the server differentiate between text and command from the user?
+   - User have to communicate with the server first in order to communicate with others he wishes to but how does the server know what user wants.   
+   - Syntax was designed (actually given) to understand what the user want like          ```/broadcast Hey CS425!!``` 
+     this string will be tokenize that is it will be divided into tokens of word and will be parsed accordingly like here /broadcast matches with our syntax to broadcast whaterver is after it, here "HEY CS425!!". Similialry other commands work.    
+2. How do we know where our server is crashing or behaving wrongly ?
+    - It is well known that bad code will be presenent and we need to debug it with time to time but how to figure out where is our program crashing or running badly.
+    - Error handling or Exceptional handling come handy while doing the debugging since we can now easily pin point where the leakage is and what is causing the bad behaviour but rest is onto us. 
 
 ## Team Contribution
 ### Member 1 - Ekansh Bajpai
