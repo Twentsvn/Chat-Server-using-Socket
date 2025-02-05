@@ -190,8 +190,16 @@ Unexpected Crashes   | Iterating over a structure while another modifies it. | B
 
 ## Testing
 > ### Correctness Testing
-- Describe test cases and scenarios used
-- Explain how edge cases were handled
+ ### Edge Cases and Expected Behavior
+
+Edge Case                        | Expected Behavior                                              | Test
+-------------------------------- | -------------------------------------------------------------- | -----------------------------------------------
+Duplicate User Login             | Prevent same username from logging in twice.                   | Try logging in twice with the same user.
+Long Messages                    | Messages should be truncated.                                  | Send a long message (more than N bytes).
+Empty Messages                   | Empty messages should be ignored.                              | Send an empty /msg B "".
+Group Message Without Joining    | User should not send messages to a group they are not part of. | Try /group_msg CS425 Hi without joining the group.
+Client Disconnects Unexpectedly  | Server should disconnect the client                            | Forcefully close the client socket.
+
 
 > ### Stress Testing
 - Describe methods used for load testing
