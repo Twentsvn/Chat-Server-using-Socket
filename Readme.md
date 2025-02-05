@@ -29,7 +29,15 @@ CS425: Computer Networks - Assignment 1
 ### Connection Management
 - I used multithreaded approach for my chat server as it is memory efficient as threads share same memory space while for every process, needs separate memory allocation. Moreover, threading enables us to process network requests without waiting for other tasks to complete.
     Threading also provides scalability to the code.
-
+## File Description
+- server_grp.cpp - Server side code
+- client_grp.cpp - client side code
+- users.txt - Contains the user-password list
+- test.sh - Bash script to test the server
+- Makefile - to build the processes
+- test_users.txt - user list for stress testing
+- Readme.md - Documenting the code
+  
 ### Synchronization
 Since the server is multithreaded, multiple clients interact concurrently, modifying shared resources. 
 To prevent race conditions and data corruption, the following resources require synchronization:
@@ -190,15 +198,15 @@ Client Disconnects Unexpectedly  | Server should disconnect the client          
 
 
 ### Stress Testing
-- Describe methods used for load testing
-- Document performance under stress
+- We wrote a bash script to stress test the server.
+- In order to rigorously assess the performance and reliability of the server under heavy load, this script facilitates an automated stress test by simulating numerous concurrent client interactions. Each client is represented by a unique set of user credentials, extracted from the test_users.txt file. For every user, the script launches a new Terminal window and executes the client binary, automatically providing the appropriate username and password. This process mimics actual user logins and interactions with the server, generating a high volume of simultaneous connections. By running these client instances in parallel, the script creates a traffic pattern that challenges the server’s ability to authenticate, process, and respond to requests efficiently. This stress test serves to uncover potential bottlenecks, memory leaks, or failures that could arise when handling large numbers of clients, such as server crashes, slowdowns, or data inconsistencies. The insights gained from this testing are crucial for identifying performance thresholds and optimizing the server to ensure it can effectively scale and handle real-world usage scenarios with minimal disruptions.
+- The server was able to manage around 250 connections under default server settings, however on increasing the system resources limit for the process, we were able to achieve around 600 connections.
+- "Connecting Reset by Peer" and "Broken Pipe" errors came up when we increases the density of connections.
+   * If the server is overwhelmed, experiences a crash, or terminates a connection prematurely (due to server-side resource constraints, authentication failures, or an intentional server shutdown), you might encounter the “Connection reset by peer” error.
+   * The “Broken pipe” error can occur if a client (started by the script) attempts to write data to the server after the server has closed or terminated the connection. This could happen if the server closes its end of the connection before the client finishes sending data, or if the server crashes or shuts down while the client is still active.
+- The maximum message size that a client can send is determined by the buffer size allocated for receiving messages from clients. This buffer has a maximum capacity of 1024 bytes, which means the maximum message length a client can send (without fragmentation or chunking) is 1024 bytes.
+- The system’s total memory (RAM) will be the limiting factor for the maximum number of groups as each group name is stored as a string, and the number of characters in the group name (maximum allowed by the system) directly influences memory usage.
 
-## Server Restrictions
-- Maximum number of concurrent clients: X
-- Maximum number of groups: Y
-- Maximum group size: Z
-- Maximum message size: N bytes
-[Add other relevant restrictions]
 
 ## Challenges Faced
 1. Challenge 1
